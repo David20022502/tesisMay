@@ -19,7 +19,12 @@ export const TecnonyState = ({ children }) => {
         if (isAuto) {
             let isReload = isNaN(window.name) ? "0" : window.name;
             if (!isReload || isReload == "0") {
-                window.location.reload();
+                if(document.location.href.endsWith("landing")){
+                    document.location.href=document.location.href+"/";
+                }else{
+                    window.location.reload();
+                }
+               
                 window.name = "1";
             } else {
                 window.name = isReload + "0";
@@ -30,6 +35,7 @@ export const TecnonyState = ({ children }) => {
         } else {
             window.location.reload();
         }
+       
 
     }
     return <TecnonyContext.Provider

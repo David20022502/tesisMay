@@ -1,5 +1,5 @@
 import React from 'react'
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, redirect } from 'react-router-dom';
 
 import { Login, Register, Forgot_password, Reset_password } from '../pages/auth';
 import { Dashboard } from '../pages/app/Dashboard';
@@ -25,11 +25,11 @@ import { UpdateServic } from '../pages/servic/UpdateServic';
 
 /*Importanciones de aprobar o rechazar servicios*/
 import { ServicAprob } from '../pages/servicesaprob/ServicAprob';
-import { ListServicAprob} from '../pages/servicesaprob/ListServicAprob';
+import { ListServicAprob } from '../pages/servicesaprob/ListServicAprob';
 import { CreateServicAprob } from '../pages/servicesaprob/CreateServicAprob';
 import { ShowServicAprob } from '../pages/servicesaprob/ShowServicAprob';
 
-import { ListFinalize} from '../pages/servicesaprob/ListFinalize';
+import { ListFinalize } from '../pages/servicesaprob/ListFinalize';
 import { ShowFinalize } from '../pages/servicesaprob/ShowFinalize';
 
 
@@ -44,7 +44,7 @@ import { LandingPage } from '../pages/app/Landingpage';
 
 import { Coments } from '../pages/coments/Coments';
 import { ListComents } from '../pages/coments/ListComents';
-import {ShowComents} from '../pages/coments/ShowComents'
+import { ShowComents } from '../pages/coments/ShowComents'
 
 import { ComentsAdmin } from '../pages/comentsAdmin/ComentsAdmin';
 import { ListComentsAdmin } from '../pages/comentsAdmin/ListComentsAdmin';
@@ -55,29 +55,16 @@ import { useContext } from 'react';
 import { useEffect } from 'react';
 
 export const AppRouter = () => {
-    const{reloadWindow}=useContext(TecnonyContext)
-    useEffect(()=>{
+    const { reloadWindow } = useContext(TecnonyContext)
+    useEffect(() => {
         reloadWindow(true)
-     },[])
+    }, [])
     return (
         <AuthProvider>
             <Routes>
-
+               
                 <Route path='/landing/*' element={
-                    <PublicRoute>
-                        <Routes>
-                            <Route element={<AuthTemplate />}>
-                                <Route path='/*' element={<LandingPage />} />
-                                <Route path='login' element={<Login />} />
-                            </Route>
-
-                            <Route path="forgot_password" element={<Forgot_password />} />
-                            <Route path="reset_password/:token/:email" element={<Reset_password />} />
-                            <Route path="register" element={<Register />} />
-                          
-
-                        </Routes>
-                    </PublicRoute>
+                    <PublicRouteRedirectHome />
                 } />
 
                 <Route path='/*' element={
@@ -89,7 +76,7 @@ export const AppRouter = () => {
                                 <Route path='request' element={<Request />} >
                                     <Route index element={<ListRequest />} />
                                     <Route path='show/:id' element={<ShowRequest />} />
-                                  
+
 
                                 </Route>
 
@@ -103,7 +90,7 @@ export const AppRouter = () => {
                                 {/* Comentarios de los tecnicos */}
                                 <Route path='coments' element={<Coments />} >
                                     <Route index element={<ListComents />} />
-                                    <Route path='show/:id' element={<ShowComents/>} />
+                                    <Route path='show/:id' element={<ShowComents />} />
                                 </Route>
 
                                 {/* Comentarios de los administradores */}
@@ -121,13 +108,13 @@ export const AppRouter = () => {
                                 </Route>
 
                                 {/* Aprobar o rechazar servicios*/}
-                                <Route path='servicesaprob' element={<ServicAprob/>} >
-                                    <Route index element={<ListServicAprob/>} />
+                                <Route path='servicesaprob' element={<ServicAprob />} >
+                                    <Route index element={<ListServicAprob />} />
                                     <Route path='create/:id' element={<CreateServicAprob />} />
-                                    <Route path='show/:id' element={<ShowServicAprob/>} />                                   
+                                    <Route path='show/:id' element={<ShowServicAprob />} />
                                 </Route>
 
-                             {/*    Son los servicios que estan finalizando dentro de aprobar o rechazar servicios. */}
+                                {/*    Son los servicios que estan finalizando dentro de aprobar o rechazar servicios. */}
                                 <Route path='finalize' element={<ServicAprob />} >
                                     <Route index element={<ListFinalize />} />
                                     <Route path='show/:id' element={<ShowFinalize />} />
@@ -145,7 +132,26 @@ export const AppRouter = () => {
                         </Routes>
                     </PrivateRoute>
                 } />
+
             </Routes>
         </AuthProvider >
     )
+}
+
+const PublicRouteRedirectHome = () => {
+    return <PublicRoute>
+        <Routes>
+            <Route element={<AuthTemplate />}>
+                <Route path='/*' element={<LandingPage />} />
+                <Route path='landing' element={<LandingPage />} />
+                <Route path='login' element={<Login />} />
+            </Route>
+
+            <Route path="forgot_password" element={<Forgot_password />} />
+            <Route path="reset_password/:token/:email" element={<Reset_password />} />
+            <Route path="register" element={<Register />} />
+
+
+        </Routes>
+    </PublicRoute>
 }
