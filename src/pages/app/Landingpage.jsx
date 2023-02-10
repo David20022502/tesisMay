@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../../contexts';
@@ -25,6 +25,7 @@ import { BsCloudArrowDown } from "react-icons/bs"
 import { HiOutlineCog6Tooth } from "react-icons/hi2"
 import Swal from 'sweetalert2'
 import { BsSave2Fill } from "react-icons/bs";
+import { TecnonyContext } from "./Context/TecnonyContext";
 
 function sub() {
 
@@ -35,13 +36,14 @@ function sub() {
         showConfirmButton: false,
         timer: 1500,
     })
-  
+
 }
 
 
 
 export const LandingPage = () => {
     const navigate = useNavigate();
+    const { reloadWindow } = useContext(TecnonyContext)
     return (
         <>
             {/*  <!-- ======= Header ======= --> */}
@@ -76,7 +78,10 @@ export const LandingPage = () => {
                             <h1>La mejor solución para tus dispositivos</h1>
                             <h2>Somos un equipo de técnicos que brindamos asistencia técnica especializadas en informática</h2>
                             <div class="d-flex justify-content-center justify-content-lg-start">
-                                <a class="btn-get-started scrollto" onClick={() => { navigate("/landing/login") }}>Empecemos</a>
+                                <a class="btn-get-started scrollto" onClick={() => {
+                                     navigate("/landing/login")
+                                //    reloadWindow(false)
+                                }}>Empecemos</a>
                             </div>
                         </div>
                         <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
@@ -135,7 +140,7 @@ export const LandingPage = () => {
                         <div class="row content">
                             <div class="col-lg-6">
                                 <p>
-                                Tecnony es una app que mediante el uso de tecnología te une con miles de técnicos, hace la contratación de servicio más eficiente para que tengas una buena experiencia.
+                                    Tecnony es una app que mediante el uso de tecnología te une con miles de técnicos, hace la contratación de servicio más eficiente para que tengas una buena experiencia.
                                 </p>
 
                             </div>

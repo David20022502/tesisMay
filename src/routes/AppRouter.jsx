@@ -50,8 +50,15 @@ import { ComentsAdmin } from '../pages/comentsAdmin/ComentsAdmin';
 import { ListComentsAdmin } from '../pages/comentsAdmin/ListComentsAdmin';
 import { ShowComentsAdmin } from '../pages/comentsAdmin/ShowComentsAdmin';
 import { Profile } from '../pages/profile/Profile';
+import { TecnonyContext } from '../pages/app/Context/TecnonyContext';
+import { useContext } from 'react';
+import { useEffect } from 'react';
 
 export const AppRouter = () => {
+    const{reloadWindow}=useContext(TecnonyContext)
+    useEffect(()=>{
+        reloadWindow(true)
+     },[])
     return (
         <AuthProvider>
             <Routes>
